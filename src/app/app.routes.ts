@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
+import { EmpSalaryComponent } from './Components/emp-salary/emp-salary.component';
 
 export const routes: Routes = [
-    // { path: '', redirectTo: '/home', pathMatch: 'full' },
-    // { path: 'home', loadChildren: './home/home.module#HomeModule' },
-    // { path: 'employees', loadChildren: './employees/employees.module#EmployeesModule' },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    {path:"Salary",component:EmpSalaryComponent},    // { path: 'employees', loadChildren: './employees/employees.module#EmployeesModule' },
     // { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule' },
     // { path: 'projects/:id', loadChildren: './projects/projects.module#ProjectsModule' },
     // { path: 'projects/:id/tasks', loadChildren: './tasks/tasks.module#TasksModule' },
