@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeSalaryService } from '../../Services/employee-salary.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-emp-salary',
   standalone: true,
@@ -20,6 +20,7 @@ export class EmpSalaryComponent {
   years: number[];
   months: { name: string, number: number }[];
   EmployeeData:any;
+  alertShown: boolean=false;
 
 
   constructor(private  service : EmployeeSalaryService) {
@@ -44,9 +45,9 @@ export class EmpSalaryComponent {
   }
 
   myForm=new FormGroup({
-    FullName:new FormControl('',[Validators.required, Validators.minLength(3),Validators.maxLength(15)]),
-    Month:new FormControl('',[Validators.required]),
-    Year:new FormControl('',[Validators.required]),
+    FullName:new FormControl('userName',[Validators.required,Validators.maxLength(15)]),
+    Month:new FormControl('Select Month',[Validators.required]),
+    Year:new FormControl('Select Year',[Validators.required]),
   });
 
   get validName(){
@@ -59,9 +60,38 @@ export class EmpSalaryComponent {
     return this.myForm.controls.Year.valid;
   }
 
-  getdata(){
-    if(this.validName && this.validMonth &&this.validYear){
-      console.log(this.service.GetEmployeeSalary(this.myForm.value.FullName,this.myForm.value.Month,this.myForm.value.Year).subscribe((data) =>{console.log(data),this.EmployeeData=data},(err)=>{console.log(err)}));
-      }
+  getdata() {
+    if (this.validName && this.validMonth && this.validYear ) {
+      this.service.GetEmployeeSalary(this.myForm.value.FullName, this.myForm.value.Month, this.myForm.value.Year)
+        .subscribe(
+          (data) => {
+            console.log(data);
+            this.EmployeeData = data;
+            if ((this.EmployeeData == null || this.EmployeeData == undefined) ) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Not Found',
+                text: 'Employee data not found!',
+              });
+              this.alertShown = true; // Set a flag to indicate that the alert has been shown
+            }
+          },
+          (err) => {
+            console.log(err);
+            if (err.status === 404 ) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Not Found',
+                text: 'Employee data not found!',
+              });
+              this.alertShown = true; // Set a flag to indicate that the alert has been shown
+            this.EmployeeData=null;
+            }
+          }
+        );
+    }
   }
+  
+  
+  
 }
