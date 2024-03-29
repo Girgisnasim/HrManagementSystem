@@ -2,12 +2,11 @@
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
          <p style="color:red ; display:inline"> *</p>
-        @if(validName == false){
-            <p style="color:red ">Enter Valid Name</p>
-        }
         <input type="text" formControlName="FullName" class="form-control" id="name" name="name"
             placeholder="Enter your name">
-        
+            @if(validName == false){
+                <p style="color:red ">Enter Valid Name</p>
+            }
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -57,7 +56,6 @@
                 <th>Total Bonus</th>
                 <th>Total Discount</th>
                 <th>Final Salary</th>
-
             </tr>
         </thead>
         <tbody>
