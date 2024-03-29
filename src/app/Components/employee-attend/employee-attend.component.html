@@ -1,0 +1,46 @@
+<div class="container mt-5">
+    <form [formGroup]="myForm">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" formControlName="FullName" class="form-control" id="name" placeholder="Enter your name">
+        </div>
+        <div class="mb-3">
+            <label for="fromDate" class="form-label">From</label>
+            <input type="date" formControlName="DateFrom" class="form-control" id="fromDate">
+        </div>
+        <div class="mb-3">
+            <label for="toDate" class="form-label">To</label>
+            <input type="date" formControlName="DateTo" class="form-control" id="toDate">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="GetData()" >Submit</button>
+    </form>
+    <div class="container mt-5">
+        <h2>Employee Table</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Department Name</th>
+                    <th>Name</th>
+                    <th>Attend Time</th>
+                    <th>Leave Time</th>
+                    <th>Date</th>
+                    <th>update</th>
+                    <th>Delete </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of AttendData; track item.Id) {
+                    <tr>
+                        <td>{{item.departmentName}}</td>
+                        <td>{{item.empName}}</td>
+                        <td>{{item.attendTime[0]}}</td>
+                        <td>{{item.leaveTime[0]}}</td>
+                        <td>{{item.attendDate}}</td>
+                        <td><button type="button" class="btn btn-primary" (click)="UpdateData(item.id)">Update</button></td>
+                        <td><button type="button" class="btn btn-danger" (click)="DeleteData(item.id)">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -6,6 +6,7 @@ import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { EmpSalaryComponent } from './Components/emp-salary/emp-salary.component';
+import { EmployeeAttendComponent } from './Components/employee-attend/employee-attend.component';
 
 
 
@@ -22,7 +23,8 @@ import { EmpSalaryComponent } from './Components/emp-salary/emp-salary.component
       RouterModule,
       FormsModule,
       CommonModule,
-      EmpSalaryComponent
+      EmpSalaryComponent,
+      EmployeeAttendComponent
     ]
 })
 export class AppComponent {
