@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { EmployeeSalaryService } from '../../Services/employee-salary.service';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-employee-attend',
   standalone: true,
@@ -20,13 +21,16 @@ export class EmployeeAttendComponent {
   constructor(private attend:EmployeeSalaryService){
   }
   AttendData:any;
+  currentPage = 1;
+  itemsPerPage = 5; // Number of items to display per page
+
   myForm=new FormGroup({
     FullName:new FormControl('',[Validators.maxLength(15)]),
     DateFrom:new FormControl('Select Month',[Validators.required]),
     DateTo:new FormControl('Select Year',[Validators.required]),
   });
 
-  get validName(){
+  get validName(){   
     return this.myForm.controls.FullName.valid;
   }
   get validDateFrom(){
@@ -113,9 +117,39 @@ export class EmployeeAttendComponent {
       });
       return;
     }
+      // Omitted form validation and date checks for brevity
+
+      this.attend.GetEmployeeAttend(dateFromDay, dateFromMonth, dateFromYear, dateToDay, dateToMonth, dateToYear, fullName)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.AttendData = data;
+        this.currentPage = 1; // Reset current page to 1 when new data is loaded
+      }, (error) => {
+        console.error('Error:', error);
+      });
   
   }
+  nextPage() {
+    if ((this.currentPage + 1) <= this.totalPages()) {
+      this.currentPage++;
+    }
+  }
 
+  prevPage() {
+    if ((this.currentPage - 1) >= 1) {
+      this.currentPage--;
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.AttendData.length / this.itemsPerPage);
+  }
+
+  getPageItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.AttendData.slice(startIndex, endIndex);
+  }
   UpdateData(id:any){}
   DeleteData(id:any){}
 }

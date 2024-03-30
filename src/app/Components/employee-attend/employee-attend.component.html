@@ -14,6 +14,8 @@
         </div>
         <button type="submit" class="btn btn-primary" (click)="GetData()" >Submit</button>
     </form>
+    
+    @if (AttendData!=undefined) {
     <div class="container mt-5">
         <h2>Employee Table</h2>
         <table class="table">
@@ -29,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (item of AttendData; track item.Id) {
+                @for (item of  getPageItems(); track item.Id) {
                     <tr>
                         <td>{{item.departmentName}}</td>
                         <td>{{item.empName}}</td>
@@ -42,5 +44,10 @@
                 }
             </tbody>
         </table>
+        <div class="pagination">
+            <button class="btn btn-primary" (click)="prevPage()">Previous</button>
+            <span>{{ currentPage }} / {{ totalPages() }}</span>
+            <button class="btn btn-primary" (click)="nextPage()">Next</button>
     </div>
 </div>
+    }
