@@ -23,4 +23,9 @@ export class EmployeeSalaryService {
     return this.HrClient.get(this.DataUrl);
   }
   }
+
+  Delete_Attend(id:any){
+    this.DataUrl="http://localhost:5001/api/EmployeeAttend?id="+id;
+    return this.HrClient.delete(this.DataUrl);
+  }
 }

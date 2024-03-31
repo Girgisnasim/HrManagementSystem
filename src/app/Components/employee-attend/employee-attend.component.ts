@@ -1,9 +1,13 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeSalaryService } from '../../Services/employee-salary.service';
 import Swal from 'sweetalert2';
-
+import { CommonModule, NgClass } from '@angular/common';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import 'core-js/modules/web.dom-collections.iterator';
 
 @Component({
   selector: 'app-employee-attend',
@@ -11,11 +15,13 @@ import Swal from 'sweetalert2';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule,
   ],
-  providers:[EmployeeSalaryService],
+    providers:[EmployeeSalaryService],
   templateUrl: './employee-attend.component.html',
-  styleUrl: './employee-attend.component.css'
+  styleUrl: './employee-attend.component.css',
+
 })
 export class EmployeeAttendComponent {
   constructor(private attend:EmployeeSalaryService){
@@ -109,25 +115,13 @@ export class EmployeeAttendComponent {
       this.attend.GetEmployeeAttend(dateFromDay, dateFromMonth, dateFromYear, dateToDay, dateToMonth, dateToYear, fullName)
       .subscribe((data: any) => {
         console.log(data);
-        // Save the data into the AttendData property
-        this.AttendData = data;
-      }, (error) => {
-        // Handle any errors from the API call
-        console.error('Error:', error);
-      });
-      return;
-    }
-      // Omitted form validation and date checks for brevity
-
-      this.attend.GetEmployeeAttend(dateFromDay, dateFromMonth, dateFromYear, dateToDay, dateToMonth, dateToYear, fullName)
-      .subscribe((data: any) => {
-        console.log(data);
         this.AttendData = data;
         this.currentPage = 1; // Reset current page to 1 when new data is loaded
       }, (error) => {
         console.error('Error:', error);
       });
-  
+      return;
+    }
   }
   nextPage() {
     if ((this.currentPage + 1) <= this.totalPages()) {
@@ -150,6 +144,81 @@ export class EmployeeAttendComponent {
     const endIndex = startIndex + this.itemsPerPage;
     return this.AttendData.slice(startIndex, endIndex);
   }
+  printTable() {
+    window.print();
+  }
+  exportToExcel() {
+    // Check if there is data to export
+    if (!this.AttendData || this.AttendData.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No Data',
+        text: 'There is no data to export!',
+      });
+      return;
+    }
+  
+    // Define the headers for the Excel file
+    const headers = ['Department Name', 'Name', 'Attend Time', 'Leave Time', 'Date'];
+  
+    // Extract data from AttendData
+    const data = this.AttendData.map((item: { departmentName: any; empName: any; attendTime: any[]; leaveTime: any[]; attendDate: any; }) => {
+      return [
+        item.departmentName,
+        item.empName,
+        item.attendTime[0],
+        item.leaveTime[0],
+        item.attendDate
+      ];
+    });
+  
+    // Add headers to the beginning of the data array
+    data.unshift(headers);
+  
+    // Create a new workbook
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  
+    // Convert data array to worksheet
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+  
+    // Add worksheet to the workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Employee Attendance');
+  
+    // Save the workbook as an Excel file
+    XLSX.writeFile(wb, 'employeeAttendance.xlsx');
+  }
+  
+  
   UpdateData(id:any){}
-  DeleteData(id:any){}
-}
+  Delete_Attend(id: any): Promise<void> {
+    // Show confirmation popup
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this data!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // User confirmed, perform deletion
+          this.attend.Delete_Attend(id).subscribe(() => {
+            // Filter out the deleted item from AttendData
+            this.AttendData = this.AttendData.filter((item: any) => item.id !== id);
+            // Optionally, show a success message
+            Swal.fire('Deleted!', 'Your data has been deleted.', 'success');
+            resolve(); // Resolve the promise
+          }, (error) => {
+            console.error('Error deleting data:', error);
+            reject(); // Reject the promise
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // User canceled, reject the promise
+          Swal.fire('Cancelled', 'Your data is safe :)', 'error');
+          reject(); // Reject the promise
+        }
+      });
+    });
+  }
+}  
