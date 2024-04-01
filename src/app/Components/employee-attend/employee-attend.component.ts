@@ -29,6 +29,8 @@ export class EmployeeAttendComponent {
   AttendData:any;
   currentPage = 1;
   itemsPerPage = 5; // Number of items to display per page
+  UpdateAttend:any;
+
 
   myForm=new FormGroup({
     FullName:new FormControl('',[Validators.maxLength(15)]),
@@ -46,7 +48,7 @@ export class EmployeeAttendComponent {
     return this.myForm.controls.DateFrom.valid;
   }
 
-  GetData(){
+  GetData() {
     // Check if the form is valid
     if (!this.myForm.valid) {
       Swal.fire({
@@ -87,7 +89,7 @@ export class EmployeeAttendComponent {
     }
   
     // Check if dateTo is greater than or equal to dateFrom
-    if (dateFrom > dateTo ) {
+    if (dateFrom > dateTo) {
       Swal.fire({
         icon: 'error',
         title: 'Invalid Date Range',
@@ -96,7 +98,18 @@ export class EmployeeAttendComponent {
       return;
     }
 
-    //range of date
+    // Check if dateTo is greater than the current date
+    const currentDate = new Date();
+    if (dateTo > currentDate) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Date To',
+        text: 'Date To cannot be greater than the current date!',
+      });
+      return;
+    }
+
+    // Range of date
     const currentYear = new Date().getFullYear();
     if (dateFrom.getFullYear() < 2008 || dateTo.getFullYear() > currentYear) {
       Swal.fire({
@@ -105,24 +118,25 @@ export class EmployeeAttendComponent {
         text: `Date To should be between 2008 and ${currentYear}`,
       });
       return;
-    }else{
-      var dateFromDay= dateFrom.getDate();
-      var dateFromMonth=dateFrom.getMonth()+1;
-      var dateFromYear=dateFrom.getFullYear();
-      var dateToDay= dateTo.getDate();
-      var dateToMonth=dateTo.getMonth()+1;
-      var dateToYear=dateTo.getFullYear();
+    } else {
+      var dateFromDay = dateFrom.getDate();
+      var dateFromMonth = dateFrom.getMonth() + 1;
+      var dateFromYear = dateFrom.getFullYear();
+      var dateToDay = dateTo.getDate();
+      var dateToMonth = dateTo.getMonth() + 1;
+      var dateToYear = dateTo.getFullYear();
       this.attend.GetEmployeeAttend(dateFromDay, dateFromMonth, dateFromYear, dateToDay, dateToMonth, dateToYear, fullName)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.AttendData = data;
-        this.currentPage = 1; // Reset current page to 1 when new data is loaded
-      }, (error) => {
-        console.error('Error:', error);
-      });
+        .subscribe((data: any) => {
+          console.log(data);
+          this.AttendData = data;
+          this.currentPage = 1; // Reset current page to 1 when new data is loaded
+        }, (error) => {
+          console.error('Error:', error);
+        });
       return;
     }
-  }
+}
+
   nextPage() {
     if ((this.currentPage + 1) <= this.totalPages()) {
       this.currentPage++;
@@ -189,7 +203,33 @@ export class EmployeeAttendComponent {
   }
   
   
-  UpdateData(id:any){}
+  UpdateData(id:any){
+    this.attend.GetAttend(id).subscribe((data)=>{(this.UpdateAttend= data)});
+  }
+  popupUpdate(){
+    let attend= (document.getElementById("Attend") as HTMLInputElement).value;
+    let leave=(document.getElementById('Leave') as HTMLInputElement).value ;
+    console.log(attend,leave);
+
+    this.UpdateAttend.attendTime=attend;
+    this.UpdateAttend.leaveTime=leave;
+    console.log(this.UpdateAttend);
+
+    let employeeAttendance = {
+      id: 9,
+      date: "2024-03-18",
+      leaveTime: "20:00:00",
+      attendTime: "09:00:00",
+      emp_id: 5,
+      employee: null,
+      hR_id: 2,
+      hRs: null
+    };
+
+    this.attend.Update_Attend(employeeAttendance).subscribe();
+
+  }
+  
   Delete_Attend(id: any): Promise<void> {
     // Show confirmation popup
     return new Promise((resolve, reject) => {
