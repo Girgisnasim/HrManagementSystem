@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import 'core-js/modules/web.dom-collections.iterator';
+import { IAttend } from '../../Models/iattend';
 
 @Component({
   selector: 'app-employee-attend',
@@ -24,7 +25,10 @@ import 'core-js/modules/web.dom-collections.iterator';
 
 })
 export class EmployeeAttendComponent {
-  constructor(private attend:EmployeeSalaryService){
+   
+    constructor(private attend:EmployeeSalaryService){
+  
+
   }
   AttendData:any;
   currentPage = 1;
@@ -214,19 +218,30 @@ export class EmployeeAttendComponent {
     this.UpdateAttend.attendTime=attend;
     this.UpdateAttend.leaveTime=leave;
     console.log(this.UpdateAttend);
-
-    let employeeAttendance = {
-      id: 9,
-      date: "2024-03-18",
-      leaveTime: "20:00:00",
-      attendTime: "09:00:00",
-      emp_id: 5,
+    let test={
+      
+        "id": 9,
+        "date": "2024-03-18",
+        "leaveTime": "20:00:00",
+        "attendTime": "10:00:00",
+        "emp_id": 5,
+        "employee": null,
+        "hR_id": 2,
+        "hRs": null
+      
+    }
+  let employeeAttendance : IAttend= {
+      id: this.UpdateAttend.id,
+      date:this.UpdateAttend.date ,
+      leaveTime: this.UpdateAttend.leaveTime,
+      attendTime: this.UpdateAttend.attendTime,
+      emp_id: this.UpdateAttend.emp_id,
       employee: null,
-      hR_id: 2,
+      hR_id: this.UpdateAttend.hR_id,
       hRs: null
     };
-
-    this.attend.Update_Attend(employeeAttendance).subscribe();
+console.log(employeeAttendance);
+    this.attend.Update_Attend(test).subscribe();
 
   }
   
