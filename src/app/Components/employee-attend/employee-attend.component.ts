@@ -9,6 +9,8 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import 'core-js/modules/web.dom-collections.iterator';
 import { IAttend } from '../../Models/iattend';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-employee-attend',
@@ -209,42 +211,72 @@ export class EmployeeAttendComponent {
   
   UpdateData(id:any){
     this.attend.GetAttend(id).subscribe((data)=>{(this.UpdateAttend= data)});
+    
   }
-  popupUpdate(){
-    let attend= (document.getElementById("Attend") as HTMLInputElement).value;
-    let leave=(document.getElementById('Leave') as HTMLInputElement).value ;
-    console.log(attend,leave);
+  popupUpdate() {
+    // Retrieve the values of attend and leave from HTML inputs
+    let attend = (document.getElementById("Attend") as HTMLInputElement).value;
+    let leave = (document.getElementById('Leave') as HTMLInputElement).value;
 
-    this.UpdateAttend.attendTime=attend;
-    this.UpdateAttend.leaveTime=leave;
-    console.log(this.UpdateAttend);
-    let test={
-      
-        "id": 9,
-        "date": "2024-03-18",
-        "leaveTime": "20:00:00",
-        "attendTime": "10:00:00",
-        "emp_id": 5,
-        "employee": null,
-        "hR_id": 2,
-        "hRs": null
-      
+    // Check if both attend and leave values are provided
+    if (!attend || !leave) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Input',
+        text: 'Please provide both attend and leave values!',
+      });
+      return;
     }
-  let employeeAttendance : IAttend= {
+
+    // Construct the employeeAttendance object with the retrieved values
+    let employeeAttendance: IAttend = {
       id: this.UpdateAttend.id,
-      date:this.UpdateAttend.date ,
-      leaveTime: this.UpdateAttend.leaveTime,
-      attendTime: this.UpdateAttend.attendTime,
+      date: this.UpdateAttend.date,
+      leaveTime: leave,
+      attendTime: attend,
       emp_id: this.UpdateAttend.emp_id,
       employee: null,
       hR_id: this.UpdateAttend.hR_id,
       hRs: null
     };
-console.log(employeeAttendance);
-    this.attend.Update_Attend(test).subscribe();
 
+    // Call the Update_Attend method
+    this.attend.Update_Attend(employeeAttendance).subscribe(
+      () => {
+        // Update the AttendData array with the updated values
+        this.AttendData = this.AttendData.map((obj: { id: number; }) => {
+          if (obj.id === employeeAttendance.id) {
+            return { ...obj, attendTime: [employeeAttendance.attendTime], leaveTime: [employeeAttendance.leaveTime]}
+          } else {
+            return obj;
+          }
+        });
+    
+        // Update the UpdateAttend object as well
+        this.UpdateAttend = employeeAttendance;
+    
+        // Optionally, show a success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Updated Successfully',
+          text: 'Attendance updated successfully!',
+        });
+      },
+      (error) => {
+        console.error('Error updating data:', error);
+        // Optionally, show an error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to update attendance. Please try again later.',
+        });
+      }
+    );
   }
+
   
+
+
   Delete_Attend(id: any): Promise<void> {
     // Show confirmation popup
     return new Promise((resolve, reject) => {
