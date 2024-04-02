@@ -58,7 +58,7 @@ constructor(private HolidayService:HolidayServiceService){}
         hR_id: null
       }
       this.HolidayService.addHoliday(holiday)
-     .subscribe(
+    .subscribe(
         (data) => {
           console.log(data);
           Swal.fire({
