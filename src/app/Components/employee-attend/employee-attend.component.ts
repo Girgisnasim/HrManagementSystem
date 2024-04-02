@@ -8,6 +8,9 @@ import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import 'core-js/modules/web.dom-collections.iterator';
+import { IAttend } from '../../Models/iattend';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-employee-attend',
@@ -24,11 +27,16 @@ import 'core-js/modules/web.dom-collections.iterator';
 
 })
 export class EmployeeAttendComponent {
-  constructor(private attend:EmployeeSalaryService){
+   
+    constructor(private attend:EmployeeSalaryService){
+  
+
   }
   AttendData:any;
   currentPage = 1;
   itemsPerPage = 5; // Number of items to display per page
+  UpdateAttend:any;
+
 
   myForm=new FormGroup({
     FullName:new FormControl('',[Validators.maxLength(15)]),
@@ -46,7 +54,7 @@ export class EmployeeAttendComponent {
     return this.myForm.controls.DateFrom.valid;
   }
 
-  GetData(){
+  GetData() {
     // Check if the form is valid
     if (!this.myForm.valid) {
       Swal.fire({
@@ -87,7 +95,7 @@ export class EmployeeAttendComponent {
     }
   
     // Check if dateTo is greater than or equal to dateFrom
-    if (dateFrom > dateTo ) {
+    if (dateFrom > dateTo) {
       Swal.fire({
         icon: 'error',
         title: 'Invalid Date Range',
@@ -96,7 +104,18 @@ export class EmployeeAttendComponent {
       return;
     }
 
-    //range of date
+    // Check if dateTo is greater than the current date
+    const currentDate = new Date();
+    if (dateTo > currentDate) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Date To',
+        text: 'Date To cannot be greater than the current date!',
+      });
+      return;
+    }
+
+    // Range of date
     const currentYear = new Date().getFullYear();
     if (dateFrom.getFullYear() < 2008 || dateTo.getFullYear() > currentYear) {
       Swal.fire({
@@ -105,24 +124,25 @@ export class EmployeeAttendComponent {
         text: `Date To should be between 2008 and ${currentYear}`,
       });
       return;
-    }else{
-      var dateFromDay= dateFrom.getDate();
-      var dateFromMonth=dateFrom.getMonth()+1;
-      var dateFromYear=dateFrom.getFullYear();
-      var dateToDay= dateTo.getDate();
-      var dateToMonth=dateTo.getMonth()+1;
-      var dateToYear=dateTo.getFullYear();
+    } else {
+      var dateFromDay = dateFrom.getDate();
+      var dateFromMonth = dateFrom.getMonth() + 1;
+      var dateFromYear = dateFrom.getFullYear();
+      var dateToDay = dateTo.getDate();
+      var dateToMonth = dateTo.getMonth() + 1;
+      var dateToYear = dateTo.getFullYear();
       this.attend.GetEmployeeAttend(dateFromDay, dateFromMonth, dateFromYear, dateToDay, dateToMonth, dateToYear, fullName)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.AttendData = data;
-        this.currentPage = 1; // Reset current page to 1 when new data is loaded
-      }, (error) => {
-        console.error('Error:', error);
-      });
+        .subscribe((data: any) => {
+          console.log(data);
+          this.AttendData = data;
+          this.currentPage = 1; // Reset current page to 1 when new data is loaded
+        }, (error) => {
+          console.error('Error:', error);
+        });
       return;
     }
-  }
+}
+
   nextPage() {
     if ((this.currentPage + 1) <= this.totalPages()) {
       this.currentPage++;
@@ -189,7 +209,74 @@ export class EmployeeAttendComponent {
   }
   
   
-  UpdateData(id:any){}
+  UpdateData(id:any){
+    this.attend.GetAttend(id).subscribe((data)=>{(this.UpdateAttend= data)});
+    
+  }
+  popupUpdate() {
+    // Retrieve the values of attend and leave from HTML inputs
+    let attend = (document.getElementById("Attend") as HTMLInputElement).value;
+    let leave = (document.getElementById('Leave') as HTMLInputElement).value;
+
+    // Check if both attend and leave values are provided
+    if (!attend || !leave) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Input',
+        text: 'Please provide both attend and leave values!',
+      });
+      return;
+    }
+
+    // Construct the employeeAttendance object with the retrieved values
+    let employeeAttendance: IAttend = {
+      id: this.UpdateAttend.id,
+      date: this.UpdateAttend.date,
+      leaveTime: leave,
+      attendTime: attend,
+      emp_id: this.UpdateAttend.emp_id,
+      employee: null,
+      hR_id: this.UpdateAttend.hR_id,
+      hRs: null
+    };
+
+    // Call the Update_Attend method
+    this.attend.Update_Attend(employeeAttendance).subscribe(
+      () => {
+        // Update the AttendData array with the updated values
+        this.AttendData = this.AttendData.map((obj: { id: number; }) => {
+          if (obj.id === employeeAttendance.id) {
+            return { ...obj, attendTime: [employeeAttendance.attendTime], leaveTime: [employeeAttendance.leaveTime]}
+          } else {
+            return obj;
+          }
+        });
+    
+        // Update the UpdateAttend object as well
+        this.UpdateAttend = employeeAttendance;
+    
+        // Optionally, show a success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Updated Successfully',
+          text: 'Attendance updated successfully!',
+        });
+      },
+      (error) => {
+        console.error('Error updating data:', error);
+        // Optionally, show an error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to update attendance. Please try again later.',
+        });
+      }
+    );
+  }
+
+  
+
+
   Delete_Attend(id: any): Promise<void> {
     // Show confirmation popup
     return new Promise((resolve, reject) => {

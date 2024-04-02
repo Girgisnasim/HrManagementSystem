@@ -28,4 +28,13 @@ export class EmployeeSalaryService {
     this.DataUrl="http://localhost:5001/api/EmployeeAttend?id="+id;
     return this.HrClient.delete(this.DataUrl);
   }
+GetAttend(id:any){
+  this.DataUrl="http://localhost:5001/api/EmployeeAttend/"+id;
+  return this.HrClient.get(this.DataUrl);
+}
+Update_Attend(attendance: any) {
+  const url = "http://localhost:5001/api/EmployeeAttend";
+  return this.HrClient.put(url, attendance);
+}
+
 }

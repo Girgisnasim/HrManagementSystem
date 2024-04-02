@@ -1,0 +1,38 @@
+<div class="container">
+    <h1>Holiday Form</h1>
+    <form [formGroup]="myForm">
+        <div class="mb-3">
+            <label for="holidayName" class="form-label">Name of Holiday</label>
+            <input type="text" class="form-control" formControlName="HolidayName" id="holidayName" placeholder="Enter holiday name">
+        </div>
+        <div class="mb-3">
+            <label for="holidayDate" class="form-label">Date of Holiday</label>
+            <input type="date" class="form-control" formControlName="date" id="holidayDate">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="AddHoliday()">Submit</button>
+    </form>
+</div>
+<div class="container">
+    <h1>Holidays Table</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name of Holiday</th>
+                <th>Date of Holiday</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of Holidays; track item.Id) {
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.date}}</td>
+                <td><button class="btn btn-primary">Update</button></td>
+                <td><button class="btn btn-danger">Delete</button></td>
+            </tr>
+        }
+            <!-- Add more rows for each holiday -->
+        </tbody>
+    </table>
+</div>
