@@ -56,7 +56,6 @@ constructor(private HolidayService:HolidayServiceService){}
         date: this.myForm.value.date??"",
         hR_id: null // Assuming hR_id is nullable and will be assigned by the server
       };
-  
       this.HolidayService.addHoliday(holiday)
         .subscribe(
           (data) => {
@@ -80,7 +79,37 @@ constructor(private HolidayService:HolidayServiceService){}
         );
     }
   }
-  
+  deleteHoliday(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this holiday!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.HolidayService.DeleteHoliday(id)
+          .subscribe(
+            (data) => {
+              console.log(data);
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Holiday deleted successfully!'
+              });
+              this.GetAllHolidays(); // Refresh the list after deletion
+            },
+            (error) => {
+              console.log(error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete holiday.'
+              });
+            }
+          );
+      }
+    });
   }
-
-
+}

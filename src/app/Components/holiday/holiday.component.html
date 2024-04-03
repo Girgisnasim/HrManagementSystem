@@ -3,7 +3,8 @@
     <form [formGroup]="myForm">
         <div class="mb-3">
             <label for="holidayName" class="form-label">Name of Holiday</label>
-            <input type="text" class="form-control" formControlName="HolidayName" id="holidayName" placeholder="Enter holiday name">
+            <input type="text" class="form-control" formControlName="HolidayName" id="holidayName"
+                placeholder="Enter holiday name">
         </div>
         <div class="mb-3">
             <label for="holidayDate" class="form-label">Date of Holiday</label>
@@ -28,11 +29,34 @@
             <tr>
                 <td>{{item.name}}</td>
                 <td>{{item.date}}</td>
-                <td><button class="btn btn-primary">Update</button></td>
-                <td><button class="btn btn-danger">Delete</button></td>
+                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">Update</button></td>
+                <td><button class="btn btn-danger" (click)="deleteHoliday(item.id)">Delete</button></td>
             </tr>
-        }
-            <!-- Add more rows for each holiday -->
+            }
         </tbody>
     </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Update  Holiday Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="holidayDate" class="form-label">Date of Holiday</label>
+                    <input type="date" class="form-control" id="holidayDate">
+                </div>            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
 </div>

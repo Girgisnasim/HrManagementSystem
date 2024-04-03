@@ -13,4 +13,13 @@ export class HolidayServiceService {
   addHoliday(holiday:any){
     return this.Holidays.post("http://localhost:5001/api/Holiday",holiday);
   }
+  DeleteHoliday(id:any){
+    return this.Holidays.delete("http://localhost:5001/api/Holiday?id="+id);
+  }
+  GetHolidayById(id:any){
+    return this.Holidays.get("http://localhost:5001/api/Holiday/"+id);
+  }
+  UpdateHoliday(id:any){
+    
+  }
 }
