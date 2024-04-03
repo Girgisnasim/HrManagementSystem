@@ -42,7 +42,8 @@
                     <td>{{ item.leaveTime[0] }}</td>
                     <td>{{ item.attendDate }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="UpdateData(item.id)">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" (click)="UpdateData(item.id)">
                             Update
                         </button>
                     </td>
@@ -76,42 +77,40 @@
 
     }
     <button type="button" class="btn btn-secondary " (click)="printTable()">
-        <i class="bi bi-printer"></i> 
+        <i class="bi bi-printer"></i>
     </button>
 
     <button type="button" class="btn btn-secondary  bg-success mx-4" (click)="exportToExcel()">
         <i class="bi bi-file-excel"></i> Excel
     </button>
 </div>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-  </button>
-  @if(UpdateAttend != undefined){
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+@if(UpdateAttend != undefined){
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="mb-3">
-                <label for="Attend" class="form-label">Attend Time</label>
-                <input type="time" class="form-control" id="Attend" value="{{UpdateAttend.attendTime}}"
-                    placeholder="00:00:00" />
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3">
-                <label for="Leave" class="form-label">Leave Time</label>
-                <input type="time" class="form-control" id="Leave" value="{{UpdateAttend.leaveTime}}"
-                    placeholder="00:00:00" />
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="Attend" class="form-label">Attend Time</label>
+                    <input type="time" class="form-control" id="Attend" value="{{UpdateAttend.attendTime}}"
+                        placeholder="00:00:00" />
+                </div>
+                <div class="mb-3">
+                    <label for="Leave" class="form-label">Leave Time</label>
+                    <input type="time" class="form-control" id="Leave" value="{{UpdateAttend.leaveTime}}"
+                        placeholder="00:00:00" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="popupUpdate()">Update</button>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="popupUpdate()">Update</button>
-        </div>
-      </div>
     </div>
-  </div>}
+</div>}

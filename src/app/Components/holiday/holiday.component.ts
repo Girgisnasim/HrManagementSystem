@@ -21,6 +21,7 @@ import { IHoliday } from '../../Models/iholiday';
 })
 export class HolidayComponent implements OnInit {
   Holidays: any;
+  UpdateDate:any;
 constructor(private HolidayService:HolidayServiceService){}
   ngOnInit(): void {
     this.GetAllHolidays();
@@ -56,7 +57,6 @@ constructor(private HolidayService:HolidayServiceService){}
         date: this.myForm.value.date??"",
         hR_id: null // Assuming hR_id is nullable and will be assigned by the server
       };
-  
       this.HolidayService.addHoliday(holiday)
         .subscribe(
           (data) => {
@@ -80,7 +80,79 @@ constructor(private HolidayService:HolidayServiceService){}
         );
     }
   }
-  
+  deleteHoliday(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this holiday!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.HolidayService.DeleteHoliday(id)
+          .subscribe(
+            (data) => {
+              console.log(data);
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Holiday deleted successfully!'
+              });
+              this.GetAllHolidays(); // Refresh the list after deletion
+            },
+            (error) => {
+              console.log(error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete holiday.'
+              });
+            }
+          );
+      }
+    });
+
   }
+  UpdateHoliday(id: any) {
+    this.HolidayService.GetHolidayById(id).subscribe(
+      (data) => {
+        console.log(data);
+        this.UpdateDate = data; // Update this.Holidays with the fetched data
+        console.log(this.UpdateDate);
+      },
+      (error) => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to fetch holiday details for update.'
+        });
+      }
+    );
+  }
+  
+  popupUpdate(){
+    let DATE=(document.getElementById("Date") as HTMLInputElement).value;
+    this.UpdateDate.date=DATE;
+    console.log(this.UpdateDate);
+    this.HolidayService.UpdateHoliday(this.UpdateDate).subscribe((data)=>{
+      console.log(data);
+      this.GetAllHolidays();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Holiday updated successfully!'
+      });
+    },
+    (error) => {
+      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to update holiday.'
+      });
+    });
 
-
+  }
+}
