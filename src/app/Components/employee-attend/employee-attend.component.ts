@@ -211,7 +211,6 @@ export class EmployeeAttendComponent {
   
   UpdateData(id:any){
     this.attend.GetAttend(id).subscribe((data)=>{(this.UpdateAttend= data)});
-    
   }
   popupUpdate() {
     // Retrieve the values of attend and leave from HTML inputs

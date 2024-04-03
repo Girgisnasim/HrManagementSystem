@@ -15,8 +15,8 @@
 </div>
 <div class="container">
     <h1>Holidays Table</h1>
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
             <tr>
                 <th>Name of Holiday</th>
                 <th>Date of Holiday</th>
@@ -30,7 +30,7 @@
                 <td>{{item.name}}</td>
                 <td>{{item.date}}</td>
                 <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">Update</button></td>
+                        data-bs-target="#staticBackdrop" (click)="UpdateHoliday(item.id)">Update</button></td>
                 <td><button class="btn btn-danger" (click)="deleteHoliday(item.id)">Delete</button></td>
             </tr>
             }
@@ -38,7 +38,7 @@
     </table>
 </div>
 
-
+@if (UpdateDate!=undefined) {
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -50,13 +50,15 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="holidayDate" class="form-label">Date of Holiday</label>
-                    <input type="date" class="form-control" id="holidayDate">
-                </div>            </div>
+                    <label for="Date" class="form-label">Date of Holiday</label>
+                    <input type="date" class="form-control" id="holidayDate" id="Date" value="{{UpdateDate.date}}">
+                </div>            
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-primary" (click)="popupUpdate()">Update</button>
             </div>
         </div>
     </div>
 </div>
+}
