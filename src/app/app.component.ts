@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { EmpSalaryComponent } from './Components/emp-salary/emp-salary.component';
 import { EmployeeAttendComponent } from './Components/employee-attend/employee-attend.component';
 import { HolidayComponent } from './Components/holiday/holiday.component';
+import { AttendanceComponent } from './Components/attendance/attendance.component';
 
 
 
@@ -26,7 +27,8 @@ import { HolidayComponent } from './Components/holiday/holiday.component';
       CommonModule,
       EmpSalaryComponent,
       EmployeeAttendComponent,
-      HolidayComponent
+      HolidayComponent,
+      AttendanceComponent
     ]
 })
 export class AppComponent {
