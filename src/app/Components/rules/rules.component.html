@@ -1,0 +1,91 @@
+<section>
+  <div class="container">
+    <div class="row text-center m-3 bg-light ">
+      <div class="head">
+        <h3 class="text-dark text-center my-4">General Rules</h3>
+      </div>
+      <form [formGroup]="addRules" (submit)="AddRule($event)" >
+         <div class="row">
+          <div class="col-8 offset-2 m-auto">
+            <h4 class="text-center mb-3 text-warning-emphasis ">Extras and discounts</h4>
+
+            <div class="mb-3">
+              <label for="bouns">Bouns</label>
+              <input formControlName="bouns" type="number" id="bouns" class="form-control  " name="bouns">
+              <ng-container *ngIf="getBouns.touched">
+                <div *ngIf="getBouns.hasError('required')" class="alert alert-danger mt-1" id="errorName">
+                  Bouns is required
+                </div>
+              </ng-container>
+            </div>
+            <!-- -------------------------------------------------------------------- -->
+            <div class="mb-3">
+              <label for="discound">Deduction</label>
+              <input formControlName="discound" type="number" id="discound" class="form-control  " name="discound">
+              <ng-container *ngIf="getDiscound.touched">
+                <div *ngIf="getDiscound.hasError('required')" class="alert alert-danger mt-1" id="errorName">
+                  Deduction is required
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+       
+          <div class="col-8 my-5 offset-2">
+                   <h4 class=" text-center mt-5">WeekEnd</h4>
+            <div class="input-group mb-3">
+              <label for="offDay1"></label>
+
+             <select formControlName="offDay1" class="form-select" aria-label="Default select example"  name="offDay1" id="offDay1">
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+            </select>
+           <ng-container *ngIf="GetOffDayOne.touched">
+              <div *ngIf="GetOffDayOne.hasError('required')" class="alert alert-danger  mb-3" id="errorName">
+                Day one is required
+              </div>
+            </ng-container> 
+          </div>
+          
+
+          <div class="input-group mb-3">
+            <label for="offDay2"></label>
+
+            <select formControlName="offDay2" class="form-select" aria-label="Default select example" name="offDay2"
+              id="offDay2">
+  
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday" >Friday</option>
+            </select>
+            <ng-container *ngIf="GetOffDayTwo.touched" >
+              <div *ngIf="GetOffDayTwo.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                Day two is required
+              </div>
+            </ng-container> 
+          </div>
+          </div>
+         </div>
+
+
+
+
+        <div class="col-12">
+          <button class="btn btn-warning   m-2 px-4" type="submit"> Save</button>
+          <button class="btn btn-danger   m-2 px-4" type="submit"> Edit </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</section>

@@ -1,12 +1,17 @@
 import { Routes } from '@angular/router';
+import { AddEmpComponent } from './Components/add-emp/add-emp.component';
+import { RulesComponent } from './Components/rules/rules.component';
+import { ErrorComponent } from './Components/error/error.component';
+import { EmployeesComponent } from './Components/employees/employees.component';
 
 export const routes: Routes = [
-    // { path: '', redirectTo: '/home', pathMatch: 'full' },
-    // { path: 'home', loadChildren: './home/home.module#HomeModule' },
-    // { path: 'employees', loadChildren: './employees/employees.module#EmployeesModule' },
-    // { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule' },
-    // { path: 'projects/:id', loadChildren: './projects/projects.module#ProjectsModule' },
-    // { path: 'projects/:id/tasks', loadChildren: './tasks/tasks.module#TasksModule' },
-    // { path: 'projects/:id/tasks/:id', loadChildren: './tasks/tasks.module#TasksModule' },
-    // { path: 'projects/:id/tasks/:id/edit', loadChildren: './tasks/tasks.module#TasksModule' },
+   { path: '', redirectTo: '/Addemp', pathMatch: 'full' },
+   { path: "Addemp",component:AddEmpComponent },
+   { path: "Employees",component:EmployeesComponent },
+   { path: 'Rules',component:RulesComponent},
+   { path: '**',component:ErrorComponent},
+
+
 ];
+
+
