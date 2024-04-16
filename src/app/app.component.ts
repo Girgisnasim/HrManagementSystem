@@ -9,7 +9,6 @@ import { EmpSalaryComponent } from './Components/emp-salary/emp-salary.component
 import { EmployeeAttendComponent } from './Components/employee-attend/employee-attend.component';
 import { HolidayComponent } from './Components/holiday/holiday.component';
 import { AttendanceComponent } from './Components/attendance/attendance.component';
-import { PermissionsComponent } from './Components/permissions/permissions.component';
 
 
 
@@ -29,8 +28,7 @@ import { PermissionsComponent } from './Components/permissions/permissions.compo
       EmpSalaryComponent,
       EmployeeAttendComponent,
       HolidayComponent,
-      AttendanceComponent,
-      PermissionsComponent
+      AttendanceComponent
     ]
 })
 export class AppComponent {
