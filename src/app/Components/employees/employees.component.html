@@ -1,0 +1,77 @@
+<section class="">
+
+  <div class="container-fuild bg-light rounded-3">
+
+    <!-- <div class="head-title p-3">
+      <div class="left">
+      </div>
+      <a routerLink="['/Employees/0/edit']" class="btn-download">
+        <i class="bi bi-person-plus-fill"></i>
+        <span class="text">Add Employee</span>
+      </a>
+    </div> -->
+
+
+    <div class="table-data">
+      <div class="order">
+        <div class="head">
+          <h3 class="text-primary text-center">Recent Employees</h3>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th hidden>Id</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Phone</th>
+              <th>Salary</th>
+              <th>BirthDate</th>
+              <th>Address</th>
+              <th>HireDate</th>
+              <th>Nationailty</th>
+              <th>Attend</th>
+              <th>Leave</th>
+              <th>Department</th>
+              <th>SSn</th>
+
+              <th>Update</th>
+              <th>Delete</th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let Employee of Employees;">
+              <td hidden>{{Employee.Id}}</td>
+              <td>{{Employee.name}}</td>
+              <td>{{Employee.gender}}</td>
+              <td>{{Employee.phone}}</td>
+              <td>{{Employee.salary}}</td>
+              <td>{{Employee.birthDate}}</td>
+              <td>{{Employee.address}}</td>
+              <td>{{Employee.hireDate}}</td>
+              <td>{{Employee.nationality}}</td>
+              <td>{{Employee.attendTime}}</td>
+              <td>{{Employee.leaveTime}}</td>
+              <td>{{Employee.dept_id}}</td>
+              <td>{{Employee.ssn}}</td>
+
+
+
+              <td>
+                <!-- (click)="deleteEmployee(Employee.id)" -->
+                <button class="btn btn-warning">Update</button></td>
+              <td>
+                <button class="btn btn-danger" (click)="DeleteEmployee(id)">Delete</button>
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+  </div>
+</section>

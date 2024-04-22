@@ -108,7 +108,9 @@ constructor(private HolidayService:HolidayServiceService){}
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it'
-    }).then((result) => {
+    })
+    
+    .then((result) => {
       if (result.isConfirmed) {
         this.HolidayService.DeleteHoliday(id)
           .subscribe(
@@ -134,12 +136,14 @@ constructor(private HolidayService:HolidayServiceService){}
     });
 
   }
+
+
   UpdateHoliday(id: any) {
     this.HolidayService.GetHolidayById(id).subscribe(
       (data) => {
-        console.log(data);
+        //console.log(data);
         this.UpdateDate = data; // Update this.Holidays with the fetched data
-        console.log(this.UpdateDate);
+       // console.log(this.UpdateDate);
       },
       (error) => {
         console.log(error);
@@ -155,9 +159,9 @@ constructor(private HolidayService:HolidayServiceService){}
   popupUpdate(){
     let DATE=(document.getElementById("Date") as HTMLInputElement).value;
     this.UpdateDate.date=DATE;
-    console.log(this.UpdateDate);
+   // console.log(this.UpdateDate);
     this.HolidayService.UpdateHoliday(this.UpdateDate).subscribe((data)=>{
-      console.log(data);
+    //  console.log(data);
       this.GetAllHolidays();
       Swal.fire({
         icon: 'success',

@@ -1,0 +1,186 @@
+<section>
+  <!-- {{AddEmp.value| json}} -->
+  <h1 class="text-center py-3">All Employees</h1>
+  <div class="head">
+    <h3 class="text-primary">{{EmployeeId !=0 ? "Edit Employee":"Add Employee"}} </h3>
+</div>
+<!-- (submit)="AddEmployee($event) -->
+  <form [formGroup]="AddEmp"  >
+    <div class="row text-center d-flex justify-content-center">
+      <div class="col-8 bg-info">
+        <h2 class="pt-2">Basic Data</h2>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <label for="name"> Name</label>
+            <input formControlName="name" type="text" class="form-control" name="name" id="name"
+              aria-describedby="emailHelp" />
+            <ng-container *ngIf="getName.touched">
+              <div *ngIf="getName.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                Name is required
+              </div>
+              <div *ngIf="getName.hasError('minlength')" class="alert alert-danger mt-2" id="errorName">
+                Name must be more than 2 charctars Long
+              </div>
+              <div *ngIf="getName.hasError('maxlength')" class="alert alert-danger mt-2" id="errorName">
+                Name must be less than 50 charctars Long
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+          <div class="col-6 mb-3">
+            <label for="Address"> Address </label>
+
+            <input formControlName="address" type="text" class="form-control" name="Address" id="Address" />
+            <ng-container *ngIf="getAddress.touched">
+              <div *ngIf="getAddress.hasError('required')" class="alert alert-danger mt-1" id="errorName">
+                Address is required
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+          <div class="col-6 mb-3">
+            <label for="Phone"> Phone </label>
+
+            <input formControlName="phone" type="text" class="form-control" id="Phone" aria-describedby="emailHelp" />
+            <ng-container *ngIf="getPhone.touched">
+              <div *ngIf="getPhone.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                Phone is required
+              </div>
+              <div *ngIf="getPhone.hasError('pattern')" class="alert alert-danger mt-2" id="errorName">
+                Phone must be 11 numbers & start with 011|012|013|015
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+          <div class="col-6 mb-3">
+            <label for="Gender"> Gender</label>
+            <select formControlName="gender" class="form-select" aria-label="Default select example" name="Gender"
+              id="Gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <ng-container *ngIf="getGender.touched">
+              <div *ngIf="getGender.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                Gender is required
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+          <div class="col-6 mb-3">
+            <label for="Nationality"> Nationality </label>
+            <input formControlName="nationality" type="text" class="form-control" id="Nationality" />
+            <ng-container *ngIf="getNationality.touched">
+              <div *ngIf="getNationality.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                Nationality is required
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+          <div class="col-6 mb-3">
+            <label for="BirthDate"> BirthDate </label>
+            <input formControlName="birthDate" type="date" class="form-control" id="BirthDate" />
+            <ng-container *ngIf="getBirthDate.touched">
+              <div *ngIf="getBirthDate.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                BirthDate is required
+              </div>
+              <div *ngIf="getBirthDate.hasError('dateOutOfRange')" class="alert alert-danger mt-2">
+                Date must be between 1/1/1960 and 1/1/2003
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+          <div class="col-6 mb-3">
+            <label for="SSN"> SSN </label>
+            <input formControlName="ssn" type="number" class="form-control" id="National_ID" />
+            <ng-container *ngIf="getSSN.touched">
+              <div *ngIf="getSSN.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+                SSN is required
+              </div>
+              <div *ngIf="getSSN.hasError('pattern')" class="alert alert-danger mt-2" id="errorName">
+                SSN must be 14 numbers
+              </div>
+            </ng-container>
+          </div>
+          <!-- ================================================================================= -->
+        </div>
+      </div>
+      <div class="col-4 p-2 bg-danger">
+        <h2 class="">Business Data</h2>
+
+        <div class="mb-3">
+          <label for="Hire"> Hire Data </label>
+
+          <input formControlName="hireDate" type="date" min="2008-01-01" max="2024-4-01" class="form-control"
+            id="Hire" />
+          <ng-container *ngIf="getHireDate.touched">
+            <div *ngIf="getHireDate.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+              HireDate is required
+            </div>
+            <div *ngIf="getHireDate.hasError('validateDateRange')" class="alert alert-danger mt-2" id="errorName">
+              HireDate must be more than 01/01/2008
+            </div>
+          </ng-container>
+        </div>
+        <!-- ================================================================================= -->
+
+        <div class="mb-3">
+          <label for="Salary"> Salary</label>
+          <input formControlName="salary" type="number" class="form-control" id="Salary" />
+          <ng-container *ngIf="getSalary.touched">
+            <div *ngIf="getSalary.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+              Salary is required
+            </div>
+            <div *ngIf="getSalary.hasError('min')" class="alert alert-danger mt-2" id="errorName">
+              Salary must be more than 1000
+            </div>
+          </ng-container>
+        </div>
+        <!-- ================================================================================= -->
+
+        <div class="mb-3">
+          <label for="Attend"> Attend Time </label>
+          <input formControlName="attendTime" type="text" class="form-control" id="Attend" />
+          <ng-container *ngIf="getAttend.touched">
+            <div *ngIf="getAttend.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+              Attend Time is required
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- ================================================================================= -->
+
+        <div class="mb-3">
+          <label for="Leave"> Leave Time </label>
+
+          <input formControlName="leaveTime" type="text" class="form-control" id="Leave" />
+          <ng-container *ngIf="getLeave.touched">
+            <div *ngIf="getLeave.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+              Leave Time is required
+            </div>
+          </ng-container>
+        </div>
+        <!-- ================================================================================= -->
+
+        <label for="department" class="form-label">Department Name</label>
+        <select [formControl]="dept_id" (change)="onDeptChange($event)">
+          <option *ngFor="let department of departments" [value]="department.id">{{ department.deptName }}</option>
+        </select>
+        <ng-container *ngIf="getDepartment.touched">
+          <div *ngIf="getDepartment.hasError('required')" class="alert alert-danger mt-2" id="errorName">
+            Department is required
+          </div>
+        </ng-container>
+
+      </div>
+     
+    </div>
+    <div class="col-11  text-center">
+      <button type="submit" (click)="AddEmployee($event)" class="btn btn-outline-primary my-4" >
+          Add Employee
+      </button>
+
+  </div>
+  </form>
+
+  <!-- <button (click)="loadDepartments()"> show dept</button> -->
+</section>
