@@ -5,7 +5,7 @@
     <h3 class="text-primary">{{EmployeeId !=0 ? "Edit Employee":"Add Employee"}} </h3>
 </div>
 <!-- (submit)="AddEmployee($event) -->
-  <form [formGroup]="AddEmp" (submit)="AddEmployee($event)" >
+  <form [formGroup]="AddEmp"  >
     <div class="row text-center d-flex justify-content-center">
       <div class="col-8 bg-info">
         <h2 class="pt-2">Basic Data</h2>
@@ -162,15 +162,8 @@
         <!-- ================================================================================= -->
 
         <label for="department" class="form-label">Department Name</label>
-        <select formControlName="deptName" class="form-select" id="department">
-          <option *ngFor="let department of departments" value={{department.deptName}}>
-            {{department.deptName}}
-          </option>
-         
-
-
-
-          
+        <select [formControl]="dept_id" (change)="onDeptChange($event)">
+          <option *ngFor="let department of departments" [value]="department.id">{{ department.deptName }}</option>
         </select>
         <ng-container *ngIf="getDepartment.touched">
           <div *ngIf="getDepartment.hasError('required')" class="alert alert-danger mt-2" id="errorName">
@@ -182,8 +175,8 @@
      
     </div>
     <div class="col-11  text-center">
-      <button type="submit" class="btn btn-outline-primary my-4" >
-          {{EmployeeId !=0 ? "Edit Employee":"Add Employee"}}
+      <button type="submit" (click)="AddEmployee($event)" class="btn btn-outline-primary my-4" >
+          Add Employee
       </button>
 
   </div>

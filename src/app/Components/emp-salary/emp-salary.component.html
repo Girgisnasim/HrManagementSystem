@@ -1,0 +1,79 @@
+<div class="container mt-5 ">
+<form [formGroup]="myForm">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+         <p style="color:red ; display:inline"> *</p>
+        <input type="text" formControlName="FullName" class="form-control" id="name" name="name"
+            placeholder="Enter your name">
+            @if(validName == false){
+                <p style="color:red ">Enter Valid Name</p>
+            }
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="month" class="form-label">Month</label>
+            <p style="color:red ; display:inline"> *</p>
+
+            <select class="form-select" id="month" name="month" formControlName="Month">
+                <option selected disabled>Select Month</option>
+                @for (item of months; track item.name ) {
+                <option value="{{item.number}}">{{item.name}}</option>
+                }
+            </select>
+            @if(validMonth == false){
+                <p style="color:red ">Month required!</p>
+            }
+        </div>
+        <div class="col-md-6">
+            <label for="year" class="form-label">Year</label>
+            <p style="color:red ; display:inline"> *</p>
+
+            <select class="form-select" id="year" formControlName="Year" name="year">
+                <option selected disabled>Select Year</option>
+                @for (item of years; track item.toFixed) {
+                <option value="{{item}}">{{item}}</option>
+                }
+            </select>
+            @if(validYear == false){
+                <p style="color:red ">Year required!</p>
+            }
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3 my-3" (click)="getdata()">Submit</button>
+</form>
+
+@if (EmployeeData != undefined) {
+<div class="container mt-5">
+    <h2>Employee Table</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Department Name</th>
+                <th>Absence Days</th>
+                <th>Attendance Days</th>
+                <th>Bonus Hours</th>
+                <th>Late Hours</th>
+                <th>Total Bonus</th>
+                <th>Total Discount</th>
+                <th>Final Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{EmployeeData.name}}</td>
+                <td>{{EmployeeData.departmentName}}</td>
+                <td>{{EmployeeData.absenceDays}}</td>
+                <td>{{EmployeeData.attendanceDays}}</td>
+                <td>{{EmployeeData.bounsHours}}</td>
+                <td>{{EmployeeData.lateHours}}</td>
+                <td>{{EmployeeData.totalBouns}}</td>
+                <td>{{EmployeeData.totalDiscount}}</td>
+                <td>{{EmployeeData.finalSalary}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+}
+</div>
+

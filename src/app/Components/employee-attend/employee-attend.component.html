@@ -1,0 +1,116 @@
+<div class="container mt-5">
+    <form [formGroup]="myForm">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" formControlName="FullName" class="form-control" id="name"
+                placeholder="Enter your name" />
+        </div>
+        <div class="mb-3">
+            <label for="fromDate" class="form-label">From</label>
+            <input type="date" formControlName="DateFrom" class="form-control" id="fromDate" />
+        </div>
+        <div class="mb-3">
+            <label for="toDate" class="form-label">To</label>
+            <input type="date" formControlName="DateTo" class="form-control" id="toDate" />
+        </div>
+        <button type="submit" class="btn btn-primary my-3" (click)="GetData()">
+            Submit
+        </button>
+    </form>
+
+    @if (AttendData!=undefined) {
+    <div class="container mt-5">
+        <h2>Employee Table</h2>
+        <table id="employeeTable" class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Department Name</th>
+                    <th>Name</th>
+                    <th>Attend Time</th>
+                    <th>Leave Time</th>
+                    <th>Date</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of getPageItems(); track item.Id) {
+                <tr>
+                    <td>{{ item.departmentName }}</td>
+                    <td>{{ item.empName }}</td>
+                    <td>{{ item.attendTime[0] }}</td>
+                    <td>{{ item.leaveTime[0] }}</td>
+                    <td>{{ item.attendDate }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" (click)="UpdateData(item.id)">
+                            Update
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="Delete_Attend(item.id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" [ngClass]="{ disabled: currentPage === 1 }">
+                    <button class="page-link" (click)="prevPage()" [disabled]="currentPage === 1">
+                        Previous
+                    </button>
+                </li>
+                <li class="page-item">
+                    <span class="page-link">{{ currentPage }} / {{ totalPages() }}</span>
+                </li>
+                <li class="page-item" [ngClass]="{ disabled: currentPage === totalPages() }">
+                    <button class="page-link" (click)="nextPage()" [disabled]="currentPage === totalPages()">
+                        Next
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    }
+    <button type="button" class="btn btn-secondary " (click)="printTable()">
+        <i class="bi bi-printer"></i>
+    </button>
+
+    <button type="button" class="btn btn-secondary  bg-success mx-4" (click)="exportToExcel()">
+        <i class="bi bi-file-excel"></i> Excel
+    </button>
+</div>
+
+@if(UpdateAttend != undefined){
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="Attend" class="form-label">Attend Time</label>
+                    <input type="time" class="form-control" id="Attend" value="{{UpdateAttend.attendTime}}"
+                        placeholder="00:00:00" />
+                </div>
+                <div class="mb-3">
+                    <label for="Leave" class="form-label">Leave Time</label>
+                    <input type="time" class="form-control" id="Leave" value="{{UpdateAttend.leaveTime}}"
+                        placeholder="00:00:00" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="popupUpdate()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>}

@@ -54,7 +54,7 @@
               <td>{{Employee.nationality}}</td>
               <td>{{Employee.attendTime}}</td>
               <td>{{Employee.leaveTime}}</td>
-              <td>{{Employee.deptName}}</td>
+              <td>{{Employee.dept_id}}</td>
               <td>{{Employee.ssn}}</td>
 
 
@@ -63,7 +63,7 @@
                 <!-- (click)="deleteEmployee(Employee.id)" -->
                 <button class="btn btn-warning">Update</button></td>
               <td>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger" (click)="DeleteEmployee(id)">Delete</button>
               </td>
             </tr>
 

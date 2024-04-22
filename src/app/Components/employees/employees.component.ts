@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 export class EmployeesComponent implements OnInit {
   Employees: any;
   Data: any;
+id: any;
 
 
 
@@ -40,7 +41,15 @@ export class EmployeesComponent implements OnInit {
   }
 
 
-
+  DeleteEmployee(id:any){
+    this.employeeservice.deleteEmployee(id)
+          .subscribe(
+            (data) => {
+              console.log(data);
+  });
+  
+  
+  }
 
 
 
