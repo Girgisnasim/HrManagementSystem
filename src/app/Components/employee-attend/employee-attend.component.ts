@@ -27,11 +27,7 @@ import * as $ from 'jquery';
 
 })
 export class EmployeeAttendComponent {
-   
-    constructor(private attend:EmployeeSalaryService){
-  
-
-  }
+    constructor(private attend:EmployeeSalaryService){}
   AttendData:any;
   currentPage = 1;
   itemsPerPage = 5; // Number of items to display per page
