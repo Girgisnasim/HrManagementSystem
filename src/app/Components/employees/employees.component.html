@@ -1,24 +1,15 @@
-<section class="">
-
-  <div class="container-fuild bg-light rounded-3">
-
-    <!-- <div class="head-title p-3">
-      <div class="left">
-      </div>
-      <a routerLink="['/Employees/0/edit']" class="btn-download">
-        <i class="bi bi-person-plus-fill"></i>
-        <span class="text">Add Employee</span>
-      </a>
-    </div> -->
+<section >
 
 
-    <div class="table-data">
-      <div class="order">
+
+    <div class="table-data container">
+     
         <div class="head">
-          <h3 class="text-primary text-center">Recent Employees</h3>
+          <h3 class="text-primary py-3 text-center">All Employees</h3>
         </div>
-        <table class="table table-bordered">
-          <thead>
+
+        <table class="table table-striped mb-4  text-center table-bordered">
+          <thead class="table-dark">
             <tr>
               <th hidden>Id</th>
               <th>Name</th>
@@ -63,15 +54,14 @@
                 <!-- (click)="deleteEmployee(Employee.id)" -->
                 <button class="btn btn-warning">Update</button></td>
               <td>
-                <button class="btn btn-danger" (click)="DeleteEmployee(id)">Delete</button>
+                <button class="btn btn-danger" (click)="DeleteEmployee(Employee.id)">Delete</button>
               </td>
             </tr>
 
           </tbody>
 
         </table>
-      </div>
+     
 
-    </div>
   </div>
 </section>

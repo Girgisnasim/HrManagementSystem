@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row text-center m-3 bg-light ">
       <div class="head">
-        <h3 class="text-dark text-center my-4">General Rules</h3>
+        <h3 class="text-primary text-center my-4">General Rules</h3>
       </div>
       <form [formGroup]="addRules"  >
          <div class="row">
@@ -12,15 +12,7 @@
           
             <!-- -------------------------------------------------------------------------- -->
 
-            <!-- <div class="mb-3">
-              <label for="bouns">Bouns</label>
-              <input formControlName="bouns" type="number" id="bouns" class="form-control" name="bouns">
-              <ng-container *ngIf="getBouns.touched">
-                <div *ngIf="getBouns.hasError('required')" class="alert alert-danger mt-1" id="errorName">
-                  Bouns is required
-                </div>
-              </ng-container>
-            </div> -->
+          
 
             <div class="mb-3">
               <label for="bouns">Bouns</label>
@@ -95,7 +87,7 @@
 
 
         <div class="col-2">
-          <button class="btn btn-warning   m-2 px-4" (click)="AddRules()" type="submit"> Save</button>
+          <button class="btn btn-primary mb-5   px-4" (click)="AddRules()" type="submit"> Save</button>
           <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
           data-bs-target="#staticBackdrop" (click)="UpdateRules(RuleId)">Update</button>     -->
             </div>

@@ -34,9 +34,15 @@ export class EmployeeService {
   addEmployee(employee:any){
     return this.http.post <any>(`${this.baseURL}`,employee) 
   }
-  deleteEmployee(employeeId:any){
-    return this.http.delete(`${this.baseURL}?id=${employeeId}`);
+
+ 
+  deleteEmployee(id:any){
+    return this.http.delete("https://localhost:44363/api/Employee?id="+id);
   }
+
+  // deleteEmployee(id:any){
+  //   return this.http.delete(`${this.baseURL}?id=${id}`);
+  // }
 
   editEmployee(employeeId:number,employee:any){
     return this.http.put(`${this.baseURL}/${employeeId}`,employee);

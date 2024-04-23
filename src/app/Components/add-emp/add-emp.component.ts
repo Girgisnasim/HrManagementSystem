@@ -198,19 +198,18 @@ export class AddEmpComponent implements OnInit {
  
   AddEmployee(e: Event) {
     
-     console.log(this. AddEmp.value)
-   
-    // console.log(this.EmployeeId);
-    // e.preventDefault();
+     //console.log(this. AddEmp.value)
+  
     if (this.EmployeeId == 0) {
 
       this.employeeservice.addEmployee(this.AddEmp.value).subscribe(
         (data)=>{
           console.log(data);
+          this.router.navigate(['/Employees']);
+
           
         }
-     );
-    }
+     ); }
   
 }
 

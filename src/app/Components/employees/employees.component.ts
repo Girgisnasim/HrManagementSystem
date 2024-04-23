@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../Services/employee.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { FormsModule } from '@angular/forms';
 export class EmployeesComponent implements OnInit {
   Employees: any;
   Data: any;
-id: any;
+  Employee:any ;
 
 
 
@@ -31,6 +32,7 @@ id: any;
 
   
   ngOnInit(): void {
+    // this.GetAllEmployees();
     this.Employees = this.employeeservice.getAllEmployee().subscribe({
       next: (response) => {
         this.Employees = response;
@@ -38,15 +40,64 @@ id: any;
       },
       error: (myError) => { }
     });
+
+   
   }
 
 
+
+  GetAllEmployees(){
+    this.employeeservice.getAllEmployee()
+    .subscribe(
+        (data) => {
+          
+          this.Employee = data;
+          //console.log(data1)
+  
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  
+  }
+
+
+
+
   DeleteEmployee(id:any){
-    this.employeeservice.deleteEmployee(id)
+   
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this employee!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result)=>{
+      if (result.isConfirmed) {
+        this.employeeservice.deleteEmployee(id)
           .subscribe(
             (data) => {
               console.log(data);
-  });
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'employee deleted successfully!'
+              });
+            this.GetAllEmployees(); // Refresh the list after deletion
+            },
+            (error) => {
+              console.log(error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete employee.'
+              });
+            }
+          );
+      }
+    });
   
   
   }

@@ -1,13 +1,14 @@
-<section>
-  <!-- {{AddEmp.value| json}} -->
-  <h1 class="text-center py-3">All Employees</h1>
+<section class="">
+  <div class="container-fuild">
+
+  
+  <h1 class="text-center py-3 text-primary"> Add Employee</h1>
   <div class="head">
-    <h3 class="text-primary">{{EmployeeId !=0 ? "Edit Employee":"Add Employee"}} </h3>
-</div>
-<!-- (submit)="AddEmployee($event) -->
+    <h3>{{EmployeeId !=0 ? "Edit Employee":""}} </h3>
+  </div>
   <form [formGroup]="AddEmp"  >
     <div class="row text-center d-flex justify-content-center">
-      <div class="col-8 bg-info">
+      <div class="col-8 bg-light">
         <h2 class="pt-2">Basic Data</h2>
         <div class="row">
           <div class="col-6 mb-3">
@@ -104,7 +105,7 @@
           <!-- ================================================================================= -->
         </div>
       </div>
-      <div class="col-4 p-2 bg-danger">
+      <div class="col-4 p-2 ">
         <h2 class="">Business Data</h2>
 
         <div class="mb-3">
@@ -162,7 +163,7 @@
         <!-- ================================================================================= -->
 
         <label for="department" class="form-label">Department Name</label>
-        <select [formControl]="dept_id" (change)="onDeptChange($event)">
+        <select [formControl]="dept_id" class="form-select" (change)="onDeptChange($event)">
           <option *ngFor="let department of departments" [value]="department.id">{{ department.deptName }}</option>
         </select>
         <ng-container *ngIf="getDepartment.touched">
@@ -175,12 +176,11 @@
      
     </div>
     <div class="col-11  text-center">
-      <button type="submit" (click)="AddEmployee($event)" class="btn btn-outline-primary my-4" >
+      <button type="submit" (click)="AddEmployee($event)" class="btn btn-outline-primary px-5 my-4" >
           Add Employee
       </button>
 
   </div>
   </form>
-
-  <!-- <button (click)="loadDepartments()"> show dept</button> -->
+</div>
 </section>
