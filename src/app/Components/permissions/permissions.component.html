@@ -1,10 +1,10 @@
 <div class="container mt-5">
     <form>
         <div class="form-group">
-            <label for="departmentSelect">Select Department:</label>
-            <select class="form-control" id="departmentSelect" name="department">
+            <label for="departmentSelect">Select Group:</label>
+            <select class="form-control" id="departmentSelect" name="department" [(ngModel)]="roleId">
                 @for (item of departments; track item.id) {
-                <option value="{{item.id}}"> {{item.deptName}}</option>
+                <option value="{{item.id}}"> {{item.name}}</option>
                 }
             </select>
         </div>
@@ -16,124 +16,62 @@
                 <thead>
                     <tr>
                         <th>Page</th>
-                        <th>Add</th>
-                        <th>Delete</th>
+                        <th>view</th>
+                        <th>create</th>
                         <th>Modify</th>
-                        <th>Display</th>
+                        <th>delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Employees Page</td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addEmployee">
-                                <label class="form-check-label" for="addEmployee"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="deleteEmployee">
-                                <label class="form-check-label" for="deleteEmployee"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="modifyEmployee">
-                                <label class="form-check-label" for="modifyEmployee"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="displayEmployee">
-                                <label class="form-check-label" for="displayEmployee"></label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
+                        <td
+          *ngFor="
+            let box of allpermission.roleClaims.slice(8, 12);
+            let i = index
+          "
+        >
+          <input type="checkbox" [(ngModel)]="box.isSelected" name="employee" />
+        </td>
+                        <tr>
                         <td>Attendance and Departure Page</td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addAttendance">
-                                <label class="form-check-label" for="addAttendance"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="deleteAttendance">
-                                <label class="form-check-label" for="deleteAttendance"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="modifyAttendance">
-                                <label class="form-check-label" for="modifyAttendance"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="displayAttendance">
-                                <label class="form-check-label" for="displayAttendance"></label>
-                            </div>
-                        </td>
+                        <td
+          *ngFor="
+            let box of allpermission.roleClaims.slice(20, 24);
+            let i = index
+          "
+        >
+          <input type="checkbox" [(ngModel)]="box.isSelected"  name="Attendance" />
+        </td>
+                        
                     </tr>
                     <tr>
                         <td>General Settings Page</td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addSettings">
-                                <label class="form-check-label" for="addSettings"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="deleteSettings">
-                                <label class="form-check-label" for="deleteSettings"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="modifySettings">
-                                <label class="form-check-label" for="modifySettings"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="displaySettings">
-                                <label class="form-check-label" for="displaySettings"></label>
-                            </div>
-                        </td>
+                        <td
+          *ngFor="
+            let box of allpermission.roleClaims.slice(12, 16);
+            let i = index
+          "
+        >
+          <input type="checkbox" [(ngModel)]="box.isSelected"  name="Settings"/>
+        </td>
+                       
                     </tr>
                     <tr>
-                        <td>Attendance and Departure Report Page</td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addReport">
-                                <label class="form-check-label" for="addReport"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="deleteReport">
-                                <label class="form-check-label" for="deleteReport"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="modifyReport">
-                                <label class="form-check-label" for="modifyReport"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="displayReport">
-                                <label class="form-check-label" for="displayReport"></label>
-                            </div>
-                        </td>
+                        <td>Salary Report Page</td>
+                        <td
+          *ngFor="
+            let box of allpermission.roleClaims.slice(24, 28);
+            let i = index
+          "
+        >
+          <input type="checkbox" [(ngModel)]="box.isSelected"  name="Salary"/>
+        </td>
+                        
                     </tr>
                 </tbody>
             </table>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" (click)="addpermission()">Save</button>
     </form>
 </div>
